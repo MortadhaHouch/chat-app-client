@@ -1,0 +1,148 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    transition: .25s;
+}
+#root{
+    width: 100vw;
+    height: fit-content;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+nav{
+    width: 100vw;
+    height: fit-content;
+    background-color: rgba(247, 199, 255, 0.7);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+}
+nav ul{
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    z-index: 10;
+}
+nav ul li a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-size: 25px;
+    font-weight: 600;
+}
+nav ul li a.active{
+    color: rgb(0, 76, 255);
+}
+main:has(header){
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: fit-content;
+    min-height: 100vh;
+}
+main header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 75%;
+    position: absolute;
+    top: 50px;
+    left: auto;
+    right: auto;
+    z-index: 10;
+}
+main header div{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+main header div img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+main section.messages-container{
+    width: 100%;
+    height: calc(100vh - 100px - 160px);
+    display: flex;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+main section.messages-container div.card{
+    width: 80%;
+    height: fit-content;
+    background-color: rgb(193, 193, 193);
+    margin: 5px;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+main section.message-controls{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    height: 160px;
+    background-color: bisque;
+}
+main section.message-controls div:not(:first-child){
+    width: 100%;
+    height: fit-content;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+main section.message-controls div button{
+    position: absolute;
+    right: 0;
+}
+aside.aside{
+    position: fixed;
+    top: 50px;
+    right: -200px;
+    width: fit-content;
+    height: 100vh;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+    background-color: rgba(0,0,0,.6);
+    backdrop-filter: blur(10px);
+    padding: 10px;
+    border-radius: 15px 0 0 0;
+}
+aside.shown{
+    right: 0;
+}
+aside.hidden{
+    right: -200px;
+}
