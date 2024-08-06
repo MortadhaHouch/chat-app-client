@@ -6,13 +6,13 @@ async function fetchData(url,method,body,contentType,setIsLoading){
             requestBody = null;
             break;
         case "PUT":
-            requestBody=JSON.stringify({body:sign(body,import.meta.env.VITE_SECRET_KEY)})
+            requestBody=JSON.stringify({body:sign(body,import.meta.env.VITE_SECRET_KEY)});
             break;
         case "DELETE":
             requestBody = null;
             break;
         case "POST":
-            requestBody=JSON.stringify({body:sign(body,import.meta.env.VITE_SECRET_KEY)})
+            requestBody=JSON.stringify({body:sign(body,import.meta.env.VITE_SECRET_KEY)});
             break;
     }
     try {

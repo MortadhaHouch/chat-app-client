@@ -3,23 +3,22 @@
 import Logo from "../assets/wallpaperflare.com_wallpaper (37).jpg"
 export default function ChatHeader(props) {
     return (
-        <header>
+        <header className="w-100 h-auto d-flex flex-row justify-content-center align-items-center">
             <div>
-                <img src={Logo} alt="" style={{
-                    border:`5px solid ${props.isConnected ? "lightgreen":"red"}`,
-                    marginRight:"10px"
+                <img width={50} height={50} src={Logo} alt="" style={{
+                    border:`2px solid ${props.isConnected ? "lightgreen":"red"}`,
+                    marginRight:"10px",
+                    borderRadius:10
                 }}/>
-                <h2>{props.name}</h2>
             </div>
             <div className="d-flex justify-content-center align-items-center">
-                <button className="btn btn-primary" disabled >{props.connections}</button>
+                {
+                    props.connections && (
+                        <button className="btn btn-primary" disabled >{props.connections}</button>
+                    )
+                }
                 <button className="btn btn-primary">audio call</button>
                 <button className="btn btn-secondary">video call</button>
-                <button className="btn btn-info" onClick={()=>{
-                    props.setIsShown(!props.isShown);
-                }}>
-                    <span className="navbar-toggler-icon"></span>
-                </button>
             </div>
         </header>
     )

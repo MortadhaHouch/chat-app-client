@@ -1,5 +1,7 @@
 export default function Footer() {
     return (
-        <footer className="position-absolute bottom-0"></footer>
+        <footer className="text-light bg-dark">
+            footer content here
+        </footer>
     )
 }

@@ -1,17 +1,18 @@
 import { useState } from "react";
-// import {jwtDecode} from "jwt-decode";
+import {jwtDecode} from "jwt-decode";
 import { fetchData } from "../../utils/fetchData"
 export default function Login() {
     let [isLoading,setIsLoading] = useState(false);
     let [email,setEmail] = useState("");
     let [password,setPassword] = useState("");
-    async function handleSubmit(){
+    async function handleSubmit(e){
+        e.preventDefault();
         try {
             let request = await fetchData("/user/login","POST",{
                 email:email.trim(),
                 password:password.trim(),
             },"json",setIsLoading);
-            console.log(request);
+            console.log(jwtDecode(request.token));
         } catch (error) {
             console.log(error);
         }

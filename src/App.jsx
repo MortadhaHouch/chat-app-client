@@ -1,20 +1,20 @@
-import { createContext, useState } from 'react'
 import './App.css'
-import Home from './components/Home'
 import {CookiesProvider } from "react-cookie"
-let userContext;
+import {UserContextProvider} from "../providers/UserContextProvider"
+import HomeLayout from './components/HomeLayout'
+import { ThemeContextProvider } from '../providers/ThemeContextProvider'
 function App() {
-  let [user,setUser] = useState(null);
-  userContext = createContext(user);
   return (
     <>
       <CookiesProvider>
-        <userContext.Provider value={{user,setUser}}>
-          <Home/>
-        </userContext.Provider>
+        <ThemeContextProvider>
+          <UserContextProvider>
+            <HomeLayout/>
+          </UserContextProvider>
+        </ThemeContextProvider>
       </CookiesProvider>
     </>
   )
 }
 
-export {App,userContext}
+export {App}

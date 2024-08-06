@@ -17,21 +17,21 @@ store.subscribe(()=>{
 let {isLoggedIn} = store.getState().isLoggedIn;
 let router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="" element={App}>
+    <Route path="" element={<App/>}>
       {
-        isLoggedIn ? (
+        isLoggedIn|| JSON.parse(localStorage.getItem("isLoggedIn")) ? (
           <>
-            <Route path="chat" element={Chat}/>
-            <Route path="video" element={VideoChat}/>
+            <Route path="chat" element={<Chat/>}/>
+            <Route path="video" element={<VideoChat/>}/>
           </>
         ):(
           <>
-            <Route path="login" element={Login}/>
-            <Route path="signup" element={Signup}/>
+            <Route path="login" element={<Login/>}/>
+            <Route path="signup" element={<Signup/>}/>
           </>
         )
       }
-      <Route path="*" element={Error}/>
+      <Route path="*" element={<Error/>}/>
     </Route>
   )
 )

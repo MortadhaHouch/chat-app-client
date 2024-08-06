@@ -1,14 +1,20 @@
-import { useState } from "react";
+/* eslint-disable no-unused-vars */
+import { useEffect, useState } from "react";
 import { fetchData } from "../../utils/fetchData"
+import fileReading from "../../utils/fileReading";
+import {jwtDecode} from "jwt-decode";
+import {useCookies} from "react-cookie"
 export default function Signup() {
     let [isLoading,setIsLoading] = useState(false);
     let [firstName,setFirstName] = useState("");
     let [lastName,setLastName] = useState("");
     let [date,setDate] = useState("");
-    let [avatar,setAvatar] = useState(null);
+    let [avatar,setAvatar] = useState("");
     let [email,setEmail] = useState("");
     let [password,setPassword] = useState("");
-    async function handleSubmit(){
+    let [cookies,setCookie,removeCookie] = useCookies("jwt_token");
+    async function handleSubmit(e){
+        e.preventDefault();
         try {
             let request = await fetchData("/user/signup","POST",{
                 email:email.trim(),
@@ -17,12 +23,33 @@ export default function Signup() {
                 lastName:lastName.trim(),
                 date:date.trim(),
                 avatar,
-            },"blob",setIsLoading);
-            console.log(request);
+            },"json",setIsLoading);
+            if(jwtDecode(request.token).isVerified){
+                localStorage.setItem("isLoggedIn",true);
+                localStorage.setItem("email",jwtDecode(request.token).email);
+                localStorage.setItem("firstName",jwtDecode(request.token).firstName);
+                localStorage.setItem("lastName",jwtDecode(request.token).lastName);
+                localStorage.setItem("avatar",jwtDecode(request.token).avatar);
+                setCookie(
+                    "jwt_token",
+                    request.token,
+                    { 
+                        expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+                        path: '/',
+                        sameSite: "strict",
+                        secure: true,
+                    },
+                )
+            }else if(jwtDecode(request.token).email_error){
+                localStorage.setItem("isLoggedIn",true);
+            }
         } catch (error) {
             console.log(error);
         }
     }
+    useEffect(()=>{
+        console.log(avatar);
+    },[avatar])
     return (
         <main className="d-flex flex-column justify-content-center align-items-center w-100 h-auto">
             <form action="" method="post" onSubmit={handleSubmit} className="d-flex flex-column flex-column justify-content-center align-items-center w-25">
@@ -76,7 +103,14 @@ export default function Signup() {
                         name="file"
                         id="file"
                         aria-describedby="helpId"
-                        onChange={(e)=>setAvatar(e.target.files[0])}
+                        onChange={async(e)=>{
+                            try {
+                                let avatar = await fileReading(e.target.files[0]);
+                                setAvatar(avatar);
+                            } catch (error) {
+                                console.log(error);
+                            }
+                        }}
                     />
                 </div>
                 <div className="mb-3 w-100 d-flex flex-column justify-content-center align-items-center">
