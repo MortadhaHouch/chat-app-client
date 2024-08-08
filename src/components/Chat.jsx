@@ -1,11 +1,15 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 import ChatHeader from "./ChatHeader";
 import Aside from "./Aside";
 import ProfilePanel from "./ProfilePanel";
 import { IoIosSend } from "react-icons/io";
 import SwiperElement from "./SwiperElement";
+import Avatar from "../assets/wallpaperflare.com_wallpaper (37).jpg";
+import { ThemeContext } from "../../providers/ThemeContextProvider";
+import {v4} from "uuid"
 export default function Chat() {
     const socket = useRef(io("http://localhost:3000"));
     const [messages, setMessages] = useState([]);
@@ -14,8 +18,232 @@ export default function Chat() {
     const [name, setName] = useState("");
     const [isConnected, setIsConnected] = useState(false);
     const [disconnectionReason, setDisconnectionReason] = useState("");
+    let [discussion,setDiscussion] = useState({
+        email:"user@email.com",
+        userName:"mortadha",
+        friendAvatar:Avatar,
+        unseenMessagesCount:3,
+        messageIsMine:true,
+        lastMessage:"message content",
+        files:3,
+        isLoggedIn:true,
+        isVideoCalling:true,
+        isAudioCalling:true,
+        id:v4()
+    });
     const [connections, setConnections] = useState(0);
     let [isMessageReceived, setIsMessageReceived] = useState(false);
+    let theme = useContext(ThemeContext);
+    useEffect(()=>{
+        console.log(discussion);
+    },[discussion])
+    let [friends, setFriends] = useState([{
+        email:"user@email.com",
+        userName:"mortadha",
+        friendAvatar:Avatar,
+        unseenMessagesCount:3,
+        messageIsMine:true,
+        lastMessage:"message content",
+        files:3,
+        isLoggedIn:true,
+        isVideoCalling:true,
+        isAudioCalling:true,
+        id:v4()
+    },{
+        email:"user@email.com",
+        userName:"mortadha",
+        friendAvatar:Avatar,
+        unseenMessagesCount:3,
+        messageIsMine:true,
+        lastMessage:"message content",
+        files:3,
+        isLoggedIn:true,
+        isVideoCalling:true,
+        isAudioCalling:true,
+        id:v4()
+    },{
+        email:"user@email.com",
+        userName:"mortadha",
+        friendAvatar:Avatar,
+        unseenMessagesCount:3,
+        messageIsMine:true,
+        lastMessage:"message content",
+        files:3,
+        isLoggedIn:true,
+        isVideoCalling:true,
+        isAudioCalling:true,
+        id:v4()
+    },
+    {
+        email:"user@email.com",
+        userName:"mortadha",
+        friendAvatar:Avatar,
+        unseenMessagesCount:3,
+        messageIsMine:true,
+        lastMessage:"message content",
+        files:3,
+        isLoggedIn:true,
+        isVideoCalling:true,
+        isAudioCalling:true,
+        id:v4()
+    },{
+        email:"user@email.com",
+        userName:"mortadha",
+        friendAvatar:Avatar,
+        unseenMessagesCount:3,
+        messageIsMine:true,
+        lastMessage:"message content",
+        files:3,
+        isLoggedIn:true,
+        isVideoCalling:true,
+        isAudioCalling:true,
+        id:v4()
+    },{
+        email:"user@email.com",
+        userName:"mortadha",
+        friendAvatar:Avatar,
+        unseenMessagesCount:3,
+        messageIsMine:true,
+        lastMessage:"message content",
+        files:3,
+        isLoggedIn:true,
+        isVideoCalling:true,
+        isAudioCalling:true,
+        id:v4()
+    },{
+        email:"user@email.com",
+        userName:"mortadha",
+        friendAvatar:Avatar,
+        unseenMessagesCount:3,
+        messageIsMine:true,
+        lastMessage:"message content",
+        files:3,
+        isLoggedIn:true,
+        isVideoCalling:true,
+        isAudioCalling:true,
+        id:v4()
+    },{
+        email:"user@email.com",
+        userName:"mortadha",
+        friendAvatar:Avatar,
+        unseenMessagesCount:3,
+        messageIsMine:true,
+        lastMessage:"message content",
+        files:3,
+        isLoggedIn:true,
+        isVideoCalling:true,
+        isAudioCalling:true,
+        id:v4()
+    },{
+        email:"user@email.com",
+        userName:"mortadha",
+        friendAvatar:Avatar,
+        unseenMessagesCount:3,
+        messageIsMine:true,
+        lastMessage:"message content",
+        files:3,
+        isLoggedIn:true,
+        isVideoCalling:true,
+        isAudioCalling:true,
+        id:v4()
+    },{
+        email:"user@email.com",
+        userName:"mortadha",
+        friendAvatar:Avatar,
+        unseenMessagesCount:3,
+        messageIsMine:true,
+        lastMessage:"message content",
+        files:3,
+        isLoggedIn:true,
+        isVideoCalling:true,
+        isAudioCalling:true,
+        id:v4()
+    },{
+        email:"user@email.com",
+        userName:"mortadha",
+        friendAvatar:Avatar,
+        unseenMessagesCount:3,
+        messageIsMine:true,
+        lastMessage:"message content",
+        files:3,
+        isLoggedIn:true,
+        isVideoCalling:true,
+        isAudioCalling:true,
+        id:v4()
+    },{
+        email:"user@email.com",
+        userName:"mortadha",
+        friendAvatar:Avatar,
+        unseenMessagesCount:3,
+        messageIsMine:true,
+        lastMessage:"message content",
+        files:3,
+        isLoggedIn:true,
+        isVideoCalling:true,
+        isAudioCalling:true,
+        id:v4()
+    },{
+        email:"user@email.com",
+        userName:"mortadha",
+        friendAvatar:Avatar,
+        unseenMessagesCount:3,
+        messageIsMine:true,
+        lastMessage:"message content",
+        files:3,
+        isLoggedIn:true,
+        isVideoCalling:true,
+        isAudioCalling:true,
+        id:v4()
+    },{
+        email:"user@email.com",
+        userName:"mortadha",
+        friendAvatar:Avatar,
+        unseenMessagesCount:3,
+        messageIsMine:true,
+        lastMessage:"message content",
+        files:3,
+        isLoggedIn:true,
+        isVideoCalling:true,
+        isAudioCalling:true,
+        id:v4()
+    },{
+        email:"user@email.com",
+        userName:"mortadha",
+        friendAvatar:Avatar,
+        unseenMessagesCount:3,
+        messageIsMine:true,
+        lastMessage:"message content",
+        files:3,
+        isLoggedIn:true,
+        isVideoCalling:true,
+        isAudioCalling:true,
+        id:v4()
+    },{
+        email:"user@email.com",
+        userName:"mortadha",
+        friendAvatar:Avatar,
+        unseenMessagesCount:3,
+        messageIsMine:true,
+        lastMessage:"message content",
+        files:3,
+        isLoggedIn:true,
+        isVideoCalling:true,
+        isAudioCalling:true,
+        id:v4()
+    },{
+        email:"user@email.com",
+        userName:"mortadha",
+        friendAvatar:Avatar,
+        unseenMessagesCount:3,
+        messageIsMine:true,
+        lastMessage:"message content",
+        files:3,
+        isLoggedIn:true,
+        isVideoCalling:true,
+        isAudioCalling:true,
+        id:v4()
+    },]);
+    let [groups, setGroups] = useState([]);
     let [isTyping,setIsTyping] = useState(false);
     let [otherUser,setOtherUser] = useState(null);
     const lastMessageRef = useRef();
@@ -28,6 +256,12 @@ export default function Chat() {
         setIsTyping(isTyping)
         return ()=>setIsTyping(false);
     },[isTyping])
+    useEffect(()=>{
+        console.log(friends);
+    },[friends])
+    useEffect(()=>{
+        console.log(groups);
+    },[groups])
     useEffect(() => {
         const currentSocket = socket.current;
         currentSocket.on("connect", () => {
@@ -135,12 +369,18 @@ export default function Chat() {
         }
     };
     return (
-        <main className="w-100 h-auto d-flex flex-row justify-content-center align-items-center">
+        <main className="w-100 d-flex flex-row justify-content-center align-items-center"
+            style={{
+                backgroundColor:(theme.isDark || JSON.parse(localStorage.getItem("isDark")))?"#4158A6":"#FBF9F1",
+                minHeight:"100vh"
+            }}>
             <ChatHeader/>
-            <Aside/>
+            <Aside friends={friends} setFriends={setFriends} groups={groups} setGroups={setGroups} discussion={discussion} setDiscussion={setDiscussion}/>
             <ProfilePanel/>
             <SwiperElement/>
-            <form className="w-100 h-auto position-fixed bottom-0 d-flex flex-row justify-content-center align-items-center p-3">
+            <form className="w-100 h-auto position-fixed d-flex flex-row justify-content-center align-items-center p-3" style={{
+                bottom:discussion?"0":"-200px"
+            }}>
                 <div className="w-100 h-auto">
                     <input type="text" id="message-box" onChange={(e)=>setMessage(e.target.value)} className="form-control w-100"/>
                 </div>

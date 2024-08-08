@@ -14,7 +14,12 @@ export default function ProfilePanel() {
     let [cookies,setCookie,removeCookie] = useCookies("jwt_token");
     let theme = useContext(ThemeContext);
     return (
-        <aside className={`right-aside ${isShown?"shown":"hidden"}`}>
+        <aside 
+            className={`right-aside ${isShown?"shown":"hidden"}`}
+            style={{
+                backgroundColor:(theme.isDark || JSON.parse(localStorage.getItem("isDark")))?"#17153B":"#E5E1DA",
+            }}
+            >
             <button
                 className="btn"
                 style={{
@@ -37,9 +42,9 @@ export default function ProfilePanel() {
                         border: "5px solid rgba(255, 255, 255, 0.2)"
                     }}
                 />
-                <h3>{localStorage.getItem("firstName")} {localStorage.getItem("lastName")}</h3>
-                <h4>{localStorage.getItem("email")}</h4>
-                <h4><FaBirthdayCake />{localStorage.getItem("date")}</h4>
+                <h3 className={(theme.isDark || JSON.parse(localStorage.getItem("isDark")))?"text-light":"text-dark"}>{localStorage.getItem("firstName")} {localStorage.getItem("lastName")}</h3>
+                <h4 className={(theme.isDark || JSON.parse(localStorage.getItem("isDark")))?"text-light":"text-dark"}>{localStorage.getItem("email")}</h4>
+                <h4 className={(theme.isDark || JSON.parse(localStorage.getItem("isDark")))?"text-light":"text-dark"}><FaBirthdayCake />{localStorage.getItem("date")}</h4>
             </section>
             <div className="d-flex flex-column justify-content-center align-items-center" style={{gap:10}}>
                 <button className="btn" onClick={()=>{
@@ -49,10 +54,10 @@ export default function ProfilePanel() {
                     });
                 }}>
                     {
-                        theme.isDark || JSON.parse(localStorage.getItem("isDark"))?(
-                            <IoSunny size={20}/>
+                        (theme.isDark || JSON.parse(localStorage.getItem("isDark"))) || JSON.parse(localStorage.getItem("isDark"))?(
+                            <IoSunny size={20} color={(theme.isDark || JSON.parse(localStorage.getItem("isDark")))?"#E5E1DA":"#17153B"}/>
                         ):(
-                            <FaMoon size={20}/>
+                            <FaMoon size={20} color={(theme.isDark || JSON.parse(localStorage.getItem("isDark")))?"#E5E1DA":"#17153B"}/>
                         )
                     }
                 </button>
@@ -72,7 +77,7 @@ export default function ProfilePanel() {
                     } catch (error) {
                         console.log(error);
                     }
-                }}><CiLogout /><span>logout</span></button>
+                }}><CiLogout/><span>logout</span></button>
             </div>
         </aside>
     )

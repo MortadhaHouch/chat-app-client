@@ -23,7 +23,7 @@ async function fetchData(url,method,body,contentType,setIsLoading){
             credentials:"include",
             headers:{
                 "Content-Type":contentType=="json"?"application/json":"multipart/form-data",
-                "Set-Cookie":`json_token=${document.cookie?.json_token}`,
+                "Set-Cookie":`jwt_token=${document.cookie?.jwt_token}`,
                 "Cache-Control":"no"
             }
         })

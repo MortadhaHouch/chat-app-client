@@ -20,6 +20,7 @@ export default function SwiperElement() {
             centeredSlides={true}
             pagination={{clickable:true,dynamicBullets:true,dynamicMainBullets:true}}
             style={{width:"100%",height:"400px"}}
+            grabCursor={true}
             autoplay={{
                 delay:3000,
                 disableOnInteraction:false,

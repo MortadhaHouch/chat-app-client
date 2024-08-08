@@ -4,6 +4,7 @@ import { fetchData } from "../../utils/fetchData"
 import fileReading from "../../utils/fileReading";
 import {jwtDecode} from "jwt-decode";
 import {useCookies} from "react-cookie"
+import sign from "jwt-encode";
 export default function Signup() {
     let [isLoading,setIsLoading] = useState(false);
     let [firstName,setFirstName] = useState("");
@@ -25,23 +26,29 @@ export default function Signup() {
                 avatar,
             },"json",setIsLoading);
             if(jwtDecode(request.token).isVerified){
-                localStorage.setItem("isLoggedIn",true);
-                localStorage.setItem("email",jwtDecode(request.token).email);
-                localStorage.setItem("firstName",jwtDecode(request.token).firstName);
-                localStorage.setItem("lastName",jwtDecode(request.token).lastName);
-                localStorage.setItem("avatar",jwtDecode(request.token).avatar);
+                let user = jwtDecode(request.token);
+                localStorage.setItem("isLoggedIn",user.isVerified);
+                localStorage.setItem("email",user.email);
+                localStorage.setItem("firstName",user.firstName);
+                localStorage.setItem("lastName",user.lastName);
+                localStorage.setItem("avatar",user.avatar);
                 setCookie(
                     "jwt_token",
-                    request.token,
+                    sign({   
+                        email:localStorage.getItem("email"),
+                        firstName:localStorage.getItem("firstName"),
+                        lastName:localStorage.getItem("lastName"),
+                    },
+                    import.meta.env.VITE_SECRET_KEY
+                ),
                     { 
                         expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
                         path: '/',
                         sameSite: "strict",
-                        secure: true,
                     },
                 )
             }else if(jwtDecode(request.token).email_error){
-                localStorage.setItem("isLoggedIn",true);
+                localStorage.setItem("isLoggedIn",false);
             }
         } catch (error) {
             console.log(error);
