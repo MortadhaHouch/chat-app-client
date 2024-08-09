@@ -18,232 +18,18 @@ export default function Chat() {
     const [name, setName] = useState("");
     const [isConnected, setIsConnected] = useState(false);
     const [disconnectionReason, setDisconnectionReason] = useState("");
-    let [discussion,setDiscussion] = useState({
-        email:"user@email.com",
-        userName:"mortadha",
-        friendAvatar:Avatar,
-        unseenMessagesCount:3,
-        messageIsMine:true,
-        lastMessage:"message content",
-        files:3,
-        isLoggedIn:true,
-        isVideoCalling:true,
-        isAudioCalling:true,
-        id:v4()
-    });
+    let [discussion,setDiscussion] = useState();
     const [connections, setConnections] = useState(0);
     let [isMessageReceived, setIsMessageReceived] = useState(false);
     let theme = useContext(ThemeContext);
     useEffect(()=>{
         console.log(discussion);
     },[discussion])
-    let [friends, setFriends] = useState([{
-        email:"user@email.com",
-        userName:"mortadha",
-        friendAvatar:Avatar,
-        unseenMessagesCount:3,
-        messageIsMine:true,
-        lastMessage:"message content",
-        files:3,
-        isLoggedIn:true,
-        isVideoCalling:true,
-        isAudioCalling:true,
-        id:v4()
-    },{
-        email:"user@email.com",
-        userName:"mortadha",
-        friendAvatar:Avatar,
-        unseenMessagesCount:3,
-        messageIsMine:true,
-        lastMessage:"message content",
-        files:3,
-        isLoggedIn:true,
-        isVideoCalling:true,
-        isAudioCalling:true,
-        id:v4()
-    },{
-        email:"user@email.com",
-        userName:"mortadha",
-        friendAvatar:Avatar,
-        unseenMessagesCount:3,
-        messageIsMine:true,
-        lastMessage:"message content",
-        files:3,
-        isLoggedIn:true,
-        isVideoCalling:true,
-        isAudioCalling:true,
-        id:v4()
-    },
-    {
-        email:"user@email.com",
-        userName:"mortadha",
-        friendAvatar:Avatar,
-        unseenMessagesCount:3,
-        messageIsMine:true,
-        lastMessage:"message content",
-        files:3,
-        isLoggedIn:true,
-        isVideoCalling:true,
-        isAudioCalling:true,
-        id:v4()
-    },{
-        email:"user@email.com",
-        userName:"mortadha",
-        friendAvatar:Avatar,
-        unseenMessagesCount:3,
-        messageIsMine:true,
-        lastMessage:"message content",
-        files:3,
-        isLoggedIn:true,
-        isVideoCalling:true,
-        isAudioCalling:true,
-        id:v4()
-    },{
-        email:"user@email.com",
-        userName:"mortadha",
-        friendAvatar:Avatar,
-        unseenMessagesCount:3,
-        messageIsMine:true,
-        lastMessage:"message content",
-        files:3,
-        isLoggedIn:true,
-        isVideoCalling:true,
-        isAudioCalling:true,
-        id:v4()
-    },{
-        email:"user@email.com",
-        userName:"mortadha",
-        friendAvatar:Avatar,
-        unseenMessagesCount:3,
-        messageIsMine:true,
-        lastMessage:"message content",
-        files:3,
-        isLoggedIn:true,
-        isVideoCalling:true,
-        isAudioCalling:true,
-        id:v4()
-    },{
-        email:"user@email.com",
-        userName:"mortadha",
-        friendAvatar:Avatar,
-        unseenMessagesCount:3,
-        messageIsMine:true,
-        lastMessage:"message content",
-        files:3,
-        isLoggedIn:true,
-        isVideoCalling:true,
-        isAudioCalling:true,
-        id:v4()
-    },{
-        email:"user@email.com",
-        userName:"mortadha",
-        friendAvatar:Avatar,
-        unseenMessagesCount:3,
-        messageIsMine:true,
-        lastMessage:"message content",
-        files:3,
-        isLoggedIn:true,
-        isVideoCalling:true,
-        isAudioCalling:true,
-        id:v4()
-    },{
-        email:"user@email.com",
-        userName:"mortadha",
-        friendAvatar:Avatar,
-        unseenMessagesCount:3,
-        messageIsMine:true,
-        lastMessage:"message content",
-        files:3,
-        isLoggedIn:true,
-        isVideoCalling:true,
-        isAudioCalling:true,
-        id:v4()
-    },{
-        email:"user@email.com",
-        userName:"mortadha",
-        friendAvatar:Avatar,
-        unseenMessagesCount:3,
-        messageIsMine:true,
-        lastMessage:"message content",
-        files:3,
-        isLoggedIn:true,
-        isVideoCalling:true,
-        isAudioCalling:true,
-        id:v4()
-    },{
-        email:"user@email.com",
-        userName:"mortadha",
-        friendAvatar:Avatar,
-        unseenMessagesCount:3,
-        messageIsMine:true,
-        lastMessage:"message content",
-        files:3,
-        isLoggedIn:true,
-        isVideoCalling:true,
-        isAudioCalling:true,
-        id:v4()
-    },{
-        email:"user@email.com",
-        userName:"mortadha",
-        friendAvatar:Avatar,
-        unseenMessagesCount:3,
-        messageIsMine:true,
-        lastMessage:"message content",
-        files:3,
-        isLoggedIn:true,
-        isVideoCalling:true,
-        isAudioCalling:true,
-        id:v4()
-    },{
-        email:"user@email.com",
-        userName:"mortadha",
-        friendAvatar:Avatar,
-        unseenMessagesCount:3,
-        messageIsMine:true,
-        lastMessage:"message content",
-        files:3,
-        isLoggedIn:true,
-        isVideoCalling:true,
-        isAudioCalling:true,
-        id:v4()
-    },{
-        email:"user@email.com",
-        userName:"mortadha",
-        friendAvatar:Avatar,
-        unseenMessagesCount:3,
-        messageIsMine:true,
-        lastMessage:"message content",
-        files:3,
-        isLoggedIn:true,
-        isVideoCalling:true,
-        isAudioCalling:true,
-        id:v4()
-    },{
-        email:"user@email.com",
-        userName:"mortadha",
-        friendAvatar:Avatar,
-        unseenMessagesCount:3,
-        messageIsMine:true,
-        lastMessage:"message content",
-        files:3,
-        isLoggedIn:true,
-        isVideoCalling:true,
-        isAudioCalling:true,
-        id:v4()
-    },{
-        email:"user@email.com",
-        userName:"mortadha",
-        friendAvatar:Avatar,
-        unseenMessagesCount:3,
-        messageIsMine:true,
-        lastMessage:"message content",
-        files:3,
-        isLoggedIn:true,
-        isVideoCalling:true,
-        isAudioCalling:true,
-        id:v4()
-    },]);
+    let [friends, setFriends] = useState([]);
     let [groups, setGroups] = useState([]);
+    let [friendRequests,setFriendRequests] = useState([]);
+    let [groupRequests,setGroupRequests] = useState([]);
+    let [notifications,setNotifications] = useState([]);
     let [isTyping,setIsTyping] = useState(false);
     let [otherUser,setOtherUser] = useState(null);
     const lastMessageRef = useRef();
@@ -375,7 +161,20 @@ export default function Chat() {
                 minHeight:"100vh"
             }}>
             <ChatHeader/>
-            <Aside friends={friends} setFriends={setFriends} groups={groups} setGroups={setGroups} discussion={discussion} setDiscussion={setDiscussion}/>
+            <Aside 
+                friends={friends} 
+                setFriends={setFriends} 
+                groups={groups} 
+                setGroups={setGroups} 
+                discussion={discussion} 
+                setDiscussion={setDiscussion}
+                friendRequests={friendRequests}
+                setFriendRequests={setFriendRequests}
+                groupRequests={groupRequests}
+                setGroupRequests={setGroupRequests}
+                notifications={notifications}
+                setNotifications={setNotifications}
+            />
             <ProfilePanel/>
             <SwiperElement/>
             <form className="w-100 h-auto position-fixed d-flex flex-row justify-content-center align-items-center p-3" style={{

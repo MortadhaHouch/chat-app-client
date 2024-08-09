@@ -21,11 +21,12 @@ export default function ProfilePanel() {
             }}
             >
             <button
+                title="show profile"
                 className="btn"
                 style={{
                     position: "absolute",
                     top: "5%",
-                    right: "100%",
+                    left: `-30px`,
                 }}
                 onClick={()=>setIsShown(val=>!val)}
             ><img src={localStorage.getItem("avatar")} style={{borderRadius:10}} alt="" width={60} height={60}/></button>

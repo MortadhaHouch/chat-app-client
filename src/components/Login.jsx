@@ -23,6 +23,7 @@ export default function Login() {
                 localStorage.setItem("firstName",user.firstName);
                 localStorage.setItem("lastName",user.lastName);
                 localStorage.setItem("avatar",user.avatar);
+                localStorage.setItem("dateOfBirth",user.dateOfBirth);
                 setCookie(
                     "jwt_token",
                     sign({   
