@@ -1,17 +1,16 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 import ChatHeader from "./ChatHeader";
 import Aside from "./Aside";
 import ProfilePanel from "./ProfilePanel";
 import { IoIosSend } from "react-icons/io";
 import SwiperElement from "./SwiperElement";
-import Avatar from "../assets/wallpaperflare.com_wallpaper (37).jpg";
 import { ThemeContext } from "../../providers/ThemeContextProvider";
 import {v4} from "uuid"
 export default function Chat() {
-    const socket = useRef(io("http://localhost:3000"));
+    // const socket = useRef(io("http://localhost:3000"));
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState("");
     const [room, setRoom] = useState("");
@@ -48,112 +47,112 @@ export default function Chat() {
     useEffect(()=>{
         console.log(groups);
     },[groups])
-    useEffect(() => {
-        const currentSocket = socket.current;
-        currentSocket.on("connect", () => {
-            setIsConnected(currentSocket.active);
-            currentSocket.on("connection-established", (connection) => {
-                setConnections(connection);
-            });
-        });
-        currentSocket.on("disconnect", (reason) => {
-            setDisconnectionReason(reason);
-            handleDisconnect(reason);
-        });
-        currentSocket.on("room-joined", (message, data) => {
-            if (message && data) {
-                setConnections(data.connections);
-            }
-        });
-        currentSocket.on("user-disconnection-encountered", (message, data) => {
-            setConnections(data.connections);
-            console.log(message);
-            console.log(data);
-        });
-        currentSocket.on("server-error-encountered", (message, data) => {
-            setConnections(data.connections);
-            console.log(message);
-            console.log(data);
-        });
-        currentSocket.on("response-timeout-encountered", (message, data) => {
-            setConnections(data.connections);
-            console.log(message);
-            console.log(data);
-        });
-        currentSocket.on("transport-closure-encountered", (message, data) => {
-            setConnections(data.connections);
-            console.log(message);
-            console.log(data);
-        });
-        currentSocket.on("transport-error-encountered", (message, data) => {
-            setConnections(data.connections);
-            console.log(message);
-            console.log(data);
-        });
-        currentSocket.on("message-received", (data) => {
-            if (data) {
-                setConnections(data.connections);
-                if(data.message){
-                    setMessages((prevMessages) => [...prevMessages, data]);
-                    setIsMessageReceived(true);
-                }else{
-                    setIsMessageReceived(false);
-                }
-            }
-        });
-        currentSocket.on("is-user-typing",(data)=>{
-            if(data){
-                setOtherUser(data);
-            }
-        })
-        currentSocket.on("user-not-typing",(data)=>{
-            if(data){
-                setOtherUser(data);
-                setIsTyping(false);
-            }
-        })
-        return () => {
-            currentSocket.off("connect");
-            currentSocket.off("disconnect");
-            currentSocket.off("room-joined");
-            currentSocket.off("user-disconnection-encountered");
-            currentSocket.off("server-error-encountered");
-            currentSocket.off("response-timeout-encountered");
-            currentSocket.off("transport-closure-encountered");
-            currentSocket.off("transport-error-encountered");
-            currentSocket.off("message-received");
-        };
-    }, []);
-    const handleDisconnect = (reason) => {
-        const currentSocket = socket.current;
-        switch (reason) {
-            case "io client disconnect":
-                currentSocket.emit("disconnect-user", { user: currentSocket.id, time: currentSocket.id ? { date: Date.now(), user: currentSocket.id } : null, connections });
-                break;
-            case "io server disconnect":
-            case "parse error":
-            case "ping timeout":
-            case "transport close":
-            case "transport error":
-                currentSocket.emit(reason, { user: currentSocket.id, time: currentSocket.id ? { date: Date.now(), user: currentSocket.id } : null, connections });
-                break;
-            default:
-                break;
-        }
-    };
-    const sendMessage = () => {
-        if (message.trim() !== "" && name.trim() !== "") {
-            setMessages((prev)=>[...prev,{ message, room, name, date: Date.now(), connections }]);
-            lastMessageRef.current?.scrollIntoView({behavior:"smooth",top:lastMessageRef.current?.getBoundingClientRect().x+lastMessageRef.current?.getBoundingClientRect().height});
-            socket.current.emit("message", { message, room, name, date: Date.now(), connections });
-            setMessage("");
-        }
-    };
-    const joinRoom = () => {
-        if (room.trim() !== "" && name.trim() !== "") {
-            socket.current.emit("join-room", { room, name, date: Date.now(), connections });
-        }
-    };
+    // useEffect(() => {
+    //     const currentSocket = socket.current;
+    //     currentSocket.on("connect", () => {
+    //         setIsConnected(currentSocket.active);
+    //         currentSocket.on("connection-established", (connection) => {
+    //             setConnections(connection);
+    //         });
+    //     });
+    //     currentSocket.on("disconnect", (reason) => {
+    //         setDisconnectionReason(reason);
+    //         handleDisconnect(reason);
+    //     });
+    //     currentSocket.on("room-joined", (message, data) => {
+    //         if (message && data) {
+    //             setConnections(data.connections);
+    //         }
+    //     });
+    //     currentSocket.on("user-disconnection-encountered", (message, data) => {
+    //         setConnections(data.connections);
+    //         console.log(message);
+    //         console.log(data);
+    //     });
+    //     currentSocket.on("server-error-encountered", (message, data) => {
+    //         setConnections(data.connections);
+    //         console.log(message);
+    //         console.log(data);
+    //     });
+    //     currentSocket.on("response-timeout-encountered", (message, data) => {
+    //         setConnections(data.connections);
+    //         console.log(message);
+    //         console.log(data);
+    //     });
+    //     currentSocket.on("transport-closure-encountered", (message, data) => {
+    //         setConnections(data.connections);
+    //         console.log(message);
+    //         console.log(data);
+    //     });
+    //     currentSocket.on("transport-error-encountered", (message, data) => {
+    //         setConnections(data.connections);
+    //         console.log(message);
+    //         console.log(data);
+    //     });
+    //     currentSocket.on("message-received", (data) => {
+    //         if (data) {
+    //             setConnections(data.connections);
+    //             if(data.message){
+    //                 setMessages((prevMessages) => [...prevMessages, data]);
+    //                 setIsMessageReceived(true);
+    //             }else{
+    //                 setIsMessageReceived(false);
+    //             }
+    //         }
+    //     });
+    //     currentSocket.on("is-user-typing",(data)=>{
+    //         if(data){
+    //             setOtherUser(data);
+    //         }
+    //     })
+    //     currentSocket.on("user-not-typing",(data)=>{
+    //         if(data){
+    //             setOtherUser(data);
+    //             setIsTyping(false);
+    //         }
+    //     })
+    //     return () => {
+    //         currentSocket.off("connect");
+    //         currentSocket.off("disconnect");
+    //         currentSocket.off("room-joined");
+    //         currentSocket.off("user-disconnection-encountered");
+    //         currentSocket.off("server-error-encountered");
+    //         currentSocket.off("response-timeout-encountered");
+    //         currentSocket.off("transport-closure-encountered");
+    //         currentSocket.off("transport-error-encountered");
+    //         currentSocket.off("message-received");
+    //     };
+    // }, []);
+    // const handleDisconnect = (reason) => {
+    //     const currentSocket = socket.current;
+    //     switch (reason) {
+    //         case "io client disconnect":
+    //             currentSocket.emit("disconnect-user", { user: currentSocket.id, time: currentSocket.id ? { date: Date.now(), user: currentSocket.id } : null, connections });
+    //             break;
+    //         case "io server disconnect":
+    //         case "parse error":
+    //         case "ping timeout":
+    //         case "transport close":
+    //         case "transport error":
+    //             currentSocket.emit(reason, { user: currentSocket.id, time: currentSocket.id ? { date: Date.now(), user: currentSocket.id } : null, connections });
+    //             break;
+    //         default:
+    //             break;
+    //     }
+    // };
+    // const sendMessage = () => {
+    //     if (message.trim() !== "" && name.trim() !== "") {
+    //         setMessages((prev)=>[...prev,{ message, room, name, date: Date.now(), connections }]);
+    //         lastMessageRef.current?.scrollIntoView({behavior:"smooth",top:lastMessageRef.current?.getBoundingClientRect().x+lastMessageRef.current?.getBoundingClientRect().height});
+    //         socket.current.emit("message", { message, room, name, date: Date.now(), connections });
+    //         setMessage("");
+    //     }
+    // };
+    // const joinRoom = () => {
+    //     if (room.trim() !== "" && name.trim() !== "") {
+    //         socket.current.emit("join-room", { room, name, date: Date.now(), connections });
+    //     }
+    // };
     return (
         <main className="w-100 d-flex flex-row justify-content-center align-items-center"
             style={{

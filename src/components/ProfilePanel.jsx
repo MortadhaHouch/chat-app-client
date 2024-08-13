@@ -29,7 +29,7 @@ export default function ProfilePanel() {
                     left: `-30px`,
                 }}
                 onClick={()=>setIsShown(val=>!val)}
-            ><img src={localStorage.getItem("avatar")} style={{borderRadius:10}} alt="" width={60} height={60}/></button>
+            ><img src={localStorage.getItem("avatar")} style={{borderRadius:10,objectFit:"cover"}} alt="" width={60} height={60}/></button>
             <section className="d-flex flex-column justify-content-center align-items-center">
                 <img 
                     src={localStorage.getItem("avatar")} 
@@ -45,7 +45,7 @@ export default function ProfilePanel() {
                 />
                 <h3 className={(theme.isDark || JSON.parse(localStorage.getItem("isDark")))?"text-light":"text-dark"}>{localStorage.getItem("firstName")} {localStorage.getItem("lastName")}</h3>
                 <h4 className={(theme.isDark || JSON.parse(localStorage.getItem("isDark")))?"text-light":"text-dark"}>{localStorage.getItem("email")}</h4>
-                <h4 className={(theme.isDark || JSON.parse(localStorage.getItem("isDark")))?"text-light":"text-dark"}><FaBirthdayCake />{localStorage.getItem("date")}</h4>
+                <h4 className={(theme.isDark || JSON.parse(localStorage.getItem("isDark")))?"text-light":"text-dark"}><FaBirthdayCake /> {localStorage.getItem("dateOfBirth")}</h4>
             </section>
             <div className="d-flex flex-column justify-content-center align-items-center" style={{gap:10}}>
                 <button className="btn" onClick={()=>{
@@ -78,7 +78,7 @@ export default function ProfilePanel() {
                     } catch (error) {
                         console.log(error);
                     }
-                }}><CiLogout/><span>logout</span></button>
+                }}><CiLogout/> <span>logout</span></button>
             </div>
         </aside>
     )

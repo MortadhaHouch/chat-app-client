@@ -49,13 +49,13 @@ aside.left-aside{
     gap: 10px;
     background-color: rgba(11, 11, 67, 0.75);
     backdrop-filter: blur(10px);
-    width: 345px;
+    width: 360px;
     height: 100vh;
     z-index: 100;
     padding: 10px;
 }
 aside.left-aside.shown{
-    transform: translateX(-345px);
+    transform: translateX(-360px);
 }
 aside.left-aside.hidden{
     transform: translateX(0);
@@ -71,13 +71,13 @@ aside.right-aside{
     gap: 10px;
     background-color: rgba(11, 11, 67, 0.75);
     backdrop-filter: blur(10px);
-    width: 345px;
+    width: 360px;
     height: 100vh;
     z-index: 100;
     padding: 10px;
 }
 aside.right-aside.shown{
-    transform: translateX(345px);
+    transform: translateX(360px);
 }
 aside.right-aside.hidden{
     transform: translateX(0);
@@ -85,7 +85,6 @@ aside.right-aside.hidden{
 section.messages{
     width: 100%;
     height: 90vh;
-    overflow-y: scroll;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -106,8 +105,8 @@ section.messages div.message-preview{
 }
 section.messages div.message-preview img{
     grid-area: 1 / 1 / 3 / 2;
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
 }
 section.messages div.message-preview h6{
     grid-area: 1 / 2 / 2 / 3;
@@ -156,7 +155,7 @@ section.dialog > div{
     background-color: #FEFEFE;
     border-radius: 10px;
 }
-div.user-preview,div.requests-preview{
+div.user-preview,div.requests-preview,div.group-preview{
     width: 100%;
     height: fit-content;
     display: flex;
@@ -165,11 +164,23 @@ div.user-preview,div.requests-preview{
     align-items: center;
     backdrop-filter: blur(16px) saturate(180%);
     -webkit-backdrop-filter: blur(16px) saturate(180%);
-    background-color: rgba(17, 25, 40, 0.75);
     border-radius: 15px;
     border: 1px solid rgba(255, 255, 255, 0.125);
     padding: 10px;
     margin: 10px;
+}
+div.toast{
+    position: fixed;
+    padding: 10px;
+    border-radius: 10px;
+    z-index: 300;
+    bottom: 10px;
+}
+div.toast.shown{
+    right: 100px;
+}
+div.toast.hidden{
+    right: 0;
 }
 .loader {
     transform: rotateZ(45deg);
@@ -178,6 +189,8 @@ div.user-preview,div.requests-preview{
     width: 48px;
     height: 48px;
     color: #fff;
+    justify-self: center;
+    align-self: center;
 }
 .loader::before,
 .loader::after {
@@ -242,6 +255,13 @@ div.user-preview,div.requests-preview{
     87% {
         box-shadow: .2em -.2em 0 0 currentcolor;
     }
+}
+div.accordion-item > h2 > button.accordion-button::after{
+    position: absolute;
+    content:"";
+    top: auto;
+    right: 10px;
+    background-image:url("./assets/Asset 2.svg");
 }
 footer{
     width: 100vw;

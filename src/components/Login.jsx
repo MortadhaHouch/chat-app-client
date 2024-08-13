@@ -34,11 +34,12 @@ export default function Login() {
                         import.meta.env.VITE_SECRET_KEY
                     ),
                     { 
-                        expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+                        expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
                         path: '/',
                         sameSite: "strict",
                     },
                 )
+                location.assign("/chat");
             }else if(jwtDecode(request.token).email_error){
                 localStorage.setItem("isLoggedIn",false);
             }
