@@ -207,6 +207,10 @@ export default function Aside(props) {
                                                                     borderRadius:"10px 0px 0px 10px"
                                                                 }}
                                                                 id={item.id}
+                                                                onClick={()=>{
+                                                                    props.setDiscussion(item);
+                                                                    props.setMessages(item.discussionObject.messages);
+                                                                }}
                                                             >
                                                                 <img src={item.friendAvatar} style={{border:`2px solid ${item.isLoggedIn?"green":"red"}`,borderRadius:"10px"}} alt="" />
                                                                 <strong>{item.name}</strong>

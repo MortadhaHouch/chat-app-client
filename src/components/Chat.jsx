@@ -17,7 +17,7 @@ export default function Chat() {
     const [name, setName] = useState("");
     const [isConnected, setIsConnected] = useState(false);
     const [disconnectionReason, setDisconnectionReason] = useState("");
-    let [discussion,setDiscussion] = useState();
+    let [discussion,setDiscussion] = useState(null);
     const [connections, setConnections] = useState(0);
     let [isMessageReceived, setIsMessageReceived] = useState(false);
     let theme = useContext(ThemeContext);
@@ -173,9 +173,25 @@ export default function Chat() {
                 setGroupRequests={setGroupRequests}
                 notifications={notifications}
                 setNotifications={setNotifications}
+                messages={messages}
+                setMessages={setMessages}
             />
             <ProfilePanel/>
-            <SwiperElement/>
+            {
+                discussion ? (
+                    messages && messages.length > 0 ? (
+                        messages.map((item,index)=>{
+                            return (
+                                <div key={index}></div>
+                            )
+                        })
+                    ):(
+                        <p className={theme.isDark|| JSON.parse(localStorage.getItem("isDark"))?"text-light":"text-dark"}>No Messages yet</p>
+                    )
+                ):(
+                    <SwiperElement/>
+                )
+            }
             <form className="w-100 h-auto position-fixed d-flex flex-row justify-content-center align-items-center p-3" style={{
                 bottom:discussion?"0":"-200px"
             }}>
