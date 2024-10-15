@@ -44,23 +44,6 @@ export default function Aside(props) {
             setIsLoading(false);
         }
     },[dataCategory,groupCategory]);
-
-    // const handleSearch = useCallback(
-    //     debounce(async(data) => {
-    //         try {
-    //             let request = await fetchData(`/groups/search?name=${data}`,"GET",null,"json",setIsLoading);
-    //             let response = jwtDecode(request.token).items;
-    //             setFoundUsers(response);
-    //             console.log(foundUsers);
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     }, 1000), []
-    // );
-    // const handleChange = (event) => {
-    //     setUserName(event.target.value);
-    //     handleSearch(event.target.value);
-    // };
     let userSearchTabRef = useRef();
     let groupSearchTabRef = useRef();
     return (
@@ -209,13 +192,13 @@ export default function Aside(props) {
                                                                 id={item.id}
                                                                 onClick={()=>{
                                                                     props.setDiscussion(item);
-                                                                    props.setMessages(item.discussionObject.messages);
+                                                                    props.setMessages(item.messages);
                                                                 }}
                                                             >
                                                                 <img src={item.friendAvatar} style={{border:`2px solid ${item.isLoggedIn?"green":"red"}`,borderRadius:"10px"}} alt="" />
-                                                                <strong>{item.name}</strong>
+                                                                <strong>{item.username}</strong>
                                                                 {
-                                                                    Object.keys(item.discussionObject).length !==0 ? (
+                                                                    item.discussionObject && Object.keys(item.discussionObject).length !==0 ? (
                                                                         <>
                                                                             <p className={`${(theme.isDark||JSON.parse(localStorage.getItem("isDark")))?"text-light":"text-dark"}`}>
                                                                             {item.discussionObject.messageIsMine?<strong>Me :</strong>:item.name}
