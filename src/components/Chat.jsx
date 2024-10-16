@@ -13,6 +13,7 @@ import { MdOutlineEdit } from "react-icons/md";
 import {useCookies} from "react-cookie"
 import { IoIosCall } from "react-icons/io";
 import { MdOutlineVideoCall } from "react-icons/md";
+import moment from "moment"
 export default function Chat() {
     let [cookie,setCookie,removeCookie] = useCookies(["jwt_token"]);
     const socket = useRef(io("http://localhost:3000",{
@@ -28,9 +29,26 @@ export default function Chat() {
     const [connections, setConnections] = useState(0);
     let [isMessageReceived, setIsMessageReceived] = useState(false);
     let theme = useContext(ThemeContext);
-    useEffect(()=>{
-        console.log(discussion);
-    },[discussion])
+    useEffect(() => {
+        if (discussion) {
+            const currentSocket = socket.current;
+            console.log("Joining room " + discussion.id);
+            // Emit join-room request to the server
+            currentSocket.emit("join-room", { discussionId: discussion.id });
+            // Handle room-joined event (to confirm successful room join)
+            const handleRoomJoined = ({ discussionId }) => {
+                console.log("Joined room: " + discussionId);
+                if (discussion.id === discussionId) {
+                    setMessages((prev) => [...prev]); // Refresh messages
+                }
+            };
+            currentSocket.on("room-joined", handleRoomJoined);
+            // Cleanup listeners on component unmount or re-render
+            return () => {
+                currentSocket.off("room-joined", handleRoomJoined);
+            };
+        }
+    }, [discussion]);
     let [friends, setFriends] = useState([]);
     let [groups, setGroups] = useState([]);
     let [friendRequests,setFriendRequests] = useState([]);
@@ -100,10 +118,20 @@ export default function Chat() {
             socket.current.emit("send-message", { message ,discussionId:discussion.discussionId });
         }
     };
+    const groupMessagesByDay = (messages) => {
+        return messages.reduce((acc, message) => {
+            const day = moment(message.createdAt).format("YYYY-MM-DD");
+            if (!acc[day]) {
+                acc[day] = [];
+            }
+            acc[day].push(message);
+            return acc;
+        }, {});
+    };
     return (
         <main className="w-100 d-flex flex-row justify-content-center align-items-center"
             style={{
-                backgroundColor:(theme.isDark || JSON.parse(localStorage.getItem("isDark")))?"#4158A6":"#FBF9F1",
+                backgroundColor:(theme.isDark || JSON.parse(localStorage.getItem("isDark")))?"#2E236C":"#FBF9F1",
                 minHeight:"100vh"
             }}>
             <ChatHeader/>
@@ -140,10 +168,10 @@ export default function Chat() {
                                 style={{
                                     border:`${discussion.isLoggedIn?"5px solid green":"5px solid red"}`,
                                     width:150,
-                                    height:150,
+                                    aspectRatio:1,
                                     borderRadius:"50%"
                                 }}/>
-                            <span>{discussion.username}</span>
+                            <h3 className={`${theme.isDark||JSON.parse(localStorage.getItem("isDark"))?"text-light":"text-dark"}`}>{discussion.username}</h3>
                             <div>
                                 <button disabled={!discussion.isVideoCalling} className="btn btn-primary">
                                     <MdOutlineVideoCall/>
@@ -154,38 +182,98 @@ export default function Chat() {
                             </div>
                             {
                                 messages && messages.length > 0 ? (
-                                    messages.map((item,index)=>{
+                                    Object.keys(groupMessagesByDay(messages)).map((item,index)=>{
+                                        let date = new Date(item);
+                                        const formattedDate = moment(date).format("MMMM Do YYYY");
                                         return (
-                                            <>
-                                                <img 
-                                                    src={discussion.friendAvatar} 
-                                                    alt="" 
-                                                    style={{
-                                                        border:`${discussion.isLoggedIn?"2px solid green":"2px solid red"}`,
-                                                        width:50,
-                                                        height:50,
-                                                        borderRadius:"50%"
-                                                    }}
-                                                />
-                                                <div className="message-container" key={index}>
-                                                    <div 
-                                                        ref={index == messages.length - 1?lastMessageRef:null}
-                                                        key={index} 
-                                                        className="message"
-                                                        style={{
-                                                            backgroundColor:item.messageIsMine?"#77CDFF":"#DBD3D3",
-                                                            alignSelf:item.messageIsMine?"flex-end":"flex-start",
-                                                        }}
-                                                    >
-                                                        <p>{item.content}</p>
-                                                        {
-                                                            item.messageIsMine && (
-                                                                <MdOutlineEdit />
-                                                            )
-                                                        }
-                                                    </div>
-                                                </div>
-                                            </>
+                                            <div key={index} className="messages-container">
+                                                <span className="date-display">
+                                                    {formattedDate}
+                                                </span>
+                                                {
+                                                    item && Object.values(groupMessagesByDay(messages))[index].map((message,i)=>{
+                                                        let messageDate = new Date(message.createdAt);
+                                                        const messageFormattedDate = moment(messageDate).format("h:mm:ss a");
+                                                        return (
+                                                            <>
+                                                                {
+                                                                    message.messageIsMine ?(
+                                                                        <div 
+                                                                            className="message-container gap-2" 
+                                                                            key={i}
+                                                                            style={{
+                                                                                justifyContent:message.messageIsMine?"flex-end":"flex-start",
+                                                                            }}
+                                                                        >
+                                                                            <div 
+                                                                                ref={index == messages.length - 1?lastMessageRef:null}
+                                                                                className="message"
+                                                                                style={{
+                                                                                    backgroundColor:message.messageIsMine?"#024CAA":"#F4F6FF",
+                                                                                }}
+                                                                            >
+                                                                                <p className="text-light">{message.content}</p>
+                                                                                {
+                                                                                    message.messageIsMine && (
+                                                                                        <MdOutlineEdit />
+                                                                                    )
+                                                                                }
+                                                                                <span style={{color:"rgba(255,255,255,.75)"}}>
+                                                                                    {messageFormattedDate}
+                                                                                </span>
+                                                                            </div>
+                                                                            <img 
+                                                                                src={localStorage.getItem("avatar")} 
+                                                                                alt="" 
+                                                                                style={{
+                                                                                    border:`${discussion.isLoggedIn?"2px solid green":"2px solid red"}`,
+                                                                                    width:50,
+                                                                                    height:50,
+                                                                                    borderRadius:"50%"
+                                                                                }}
+                                                                            />
+                                                                        </div>
+                                                                    ):(
+                                                                        <div 
+                                                                            className="message-container gap-2" 
+                                                                            key={i}
+                                                                        >
+                                                                            <img 
+                                                                                src={discussion.friendAvatar} 
+                                                                                alt="" 
+                                                                                style={{
+                                                                                    border:`${discussion.isLoggedIn?"2px solid green":"2px solid red"}`,
+                                                                                    width:50,
+                                                                                    height:50,
+                                                                                    borderRadius:"50%"
+                                                                                }}
+                                                                            />
+                                                                            <div 
+                                                                                ref={index == messages.length - 1?lastMessageRef:null}
+                                                                                className="message"
+                                                                                style={{
+                                                                                    backgroundColor:message.messageIsMine?"#77CDFF":"#DBD3D3",
+                                                                                    alignSelf:message.messageIsMine?"flex-end":"flex-start",
+                                                                                }}
+                                                                            >
+                                                                                <p>{message.content}</p>
+                                                                                {
+                                                                                    message.messageIsMine && (
+                                                                                        <MdOutlineEdit />
+                                                                                    )
+                                                                                }
+                                                                                <span>
+                                                                                    {messageFormattedDate}
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    )
+                                                                }
+                                                            </>
+                                                        )
+                                                    })
+                                                }
+                                            </div>
                                         )
                                     })
                                 ):(
@@ -198,11 +286,23 @@ export default function Chat() {
                     )
                 }
             </section>
-            <form onSubmit={sendMessage} className="w-100 h-auto position-fixed d-flex flex-row justify-content-center align-items-center p-3" style={{
-                bottom:discussion?"0":"-200px"
-            }}>
+            <form 
+                onSubmit={sendMessage} 
+                className="position-fixed d-flex flex-row justify-content-center align-items-center p-3" 
+                style={{
+                    bottom:discussion?"0":"-200px",
+                    width:"clamp(300px, 60vw, 800px)",
+                    backgroundColor:(theme.isDark || JSON.parse(localStorage.getItem("isDark")))?"#2E236C":"#FBF9F1",
+                }}>
                 <div className="w-100 h-auto">
-                    <input type="text" id="message-box" onChange={(e)=>setMessage(e.target.value)} className="form-control w-100"/>
+                    <input 
+                        type="text" 
+                        id="message-box" 
+                        value={message} 
+                        onChange={(e)=>setMessage(e.target.value)}
+                        placeholder="Type a message..."
+                        className="form-control w-100"
+                    />
                 </div>
                 <button className={`btn btn-info ${!message && "disabled"}`} type="submit">
                     <IoIosSend/>
